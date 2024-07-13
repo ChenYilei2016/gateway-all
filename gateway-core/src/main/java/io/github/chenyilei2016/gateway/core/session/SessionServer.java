@@ -1,5 +1,6 @@
 package io.github.chenyilei2016.gateway.core.session;
 
+import io.github.chenyilei2016.gateway.core.Configuration;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -20,6 +21,9 @@ public class SessionServer implements Callable<Channel> {
     private final EventLoopGroup boss = new NioEventLoopGroup(Runtime.getRuntime().availableProcessors());
     private final EventLoopGroup work = new NioEventLoopGroup();
     private Channel channel;
+    public SessionServer(Configuration configuration) {
+        this.configuration = configuration;
+    }
 
     //NetUtil.SOMAXCONN
     @Override
