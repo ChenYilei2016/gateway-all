@@ -1,4 +1,4 @@
-package io.github.chenyilei2016.gateway.core.session;
+package io.github.chenyilei2016.gateway.core.socket;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;

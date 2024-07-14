@@ -1,5 +1,8 @@
 package io.github.chenyilei2016.gateway.core.session;
 
+import io.github.chenyilei2016.gateway.core.config.Configuration;
+import io.github.chenyilei2016.gateway.core.session.defaults.DefaultGatewaySessionFactory;
+import io.github.chenyilei2016.gateway.core.socket.GatewayBootstrapServer;
 import io.netty.channel.Channel;
 import org.apache.commons.lang3.ThreadUtils;
 
@@ -12,7 +15,7 @@ class SessionServerTest {
         System.err.println("test");
 
 
-        Channel call = new SessionServer().call();
+        Channel call = new GatewayBootstrapServer(new DefaultGatewaySessionFactory(new Configuration())).call();
 
 
         ThreadUtils.sleep(Duration.ofSeconds(1000));

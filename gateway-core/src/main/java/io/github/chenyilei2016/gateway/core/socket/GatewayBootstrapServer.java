@@ -1,6 +1,7 @@
-package io.github.chenyilei2016.gateway.core.session;
+package io.github.chenyilei2016.gateway.core.socket;
 
-import io.github.chenyilei2016.gateway.core.Configuration;
+import io.github.chenyilei2016.gateway.core.config.Configuration;
+import io.github.chenyilei2016.gateway.core.session.defaults.DefaultGatewaySessionFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -14,17 +15,19 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Callable;
 
-public class SessionServer implements Callable<Channel> {
+public class GatewayBootstrapServer implements Callable<Channel> {
 
-    private final Logger logger = LoggerFactory.getLogger(SessionServer.class);
+    private final Logger logger = LoggerFactory.getLogger(GatewayBootstrapServer.class);
 
     private final EventLoopGroup boss = new NioEventLoopGroup(Runtime.getRuntime().availableProcessors());
     private final EventLoopGroup work = new NioEventLoopGroup();
     private Channel channel;
-    public SessionServer(Configuration configuration) {
-        this.configuration = configuration;
-    }
 
+    private DefaultGatewaySessionFactory gatewaySessionFactory;
+
+    public GatewayBootstrapServer(DefaultGatewaySessionFactory gatewaySessionFactory) {
+        this.gatewaySessionFactory = gatewaySessionFactory;
+    }
     //NetUtil.SOMAXCONN
     @Override
     public Channel call() throws Exception {
@@ -35,7 +38,7 @@ public class SessionServer implements Callable<Channel> {
                     .channel(NioServerSocketChannel.class)
                     // 如果未设置或所设置的值小于1，Java将使用默认值50。
                     .option(ChannelOption.SO_BACKLOG, 1024)
-                    .childHandler(new SessionChannelInitializer());
+                    .childHandler(new GatewayChannelInitializer(gatewaySessionFactory));
 
             channelFuture = b.bind(new InetSocketAddress(7397)).syncUninterruptibly();
             this.channel = channelFuture.channel();

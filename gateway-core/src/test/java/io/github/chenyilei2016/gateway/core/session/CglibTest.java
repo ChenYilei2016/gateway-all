@@ -1,8 +1,6 @@
 package io.github.chenyilei2016.gateway.core.session;
 
-import io.github.chenyilei2016.gateway.core.generic.GenericReferenceProxy;
 import io.github.chenyilei2016.gateway.core.generic.IGenericReference;
-import net.sf.cglib.core.ReflectUtils;
 import net.sf.cglib.core.Signature;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.InterfaceMaker;
@@ -13,7 +11,6 @@ import org.objectweb.asm.Type;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collection;
 
 public class CglibTest {
     public interface MyI {

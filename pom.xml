@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>gateway-core</module>
+        <module>gateway-test</module>
     </modules>
     <packaging>pom</packaging>
 
