@@ -12,6 +12,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>gateway-test-util</module>
+        <module>gateway-test-rpc-provider-api</module>
+        <module>gateway-test-rpc-provider-bootstrap</module>
     </modules>
 
     <artifactId>gateway-test</artifactId>

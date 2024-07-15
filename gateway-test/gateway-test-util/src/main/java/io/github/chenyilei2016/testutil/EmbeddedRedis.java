@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * 内嵌redis
  */
-public class ERedis {
+public class EmbeddedRedis {
 
     public static void startAndFinallyShutdown(Runnable runnable) {
         try {

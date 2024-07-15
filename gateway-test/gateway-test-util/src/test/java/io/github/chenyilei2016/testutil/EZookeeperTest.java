@@ -11,7 +11,7 @@ class EZookeeperTest {
     @Test
     void startAndFinallyShutdown() {
 
-        EZookeeper.startAndFinallyShutdown(() -> {
+        EmbeddedZooKeeper.startAndFinallyShutdown(() -> {
 
             try {
                 Thread.sleep(3000L);
@@ -26,24 +26,10 @@ class EZookeeperTest {
     @Test
     void path2() {
 
-        URL resource = EZookeeper.class.getResource("");
+        URL resource = EmbeddedZooKeeper.class.getResource("");
 
         System.err.println(resource.getPath());
     }
 
-//    @Test
-//    public void t() {
-//        try (GenericContainer<?> zookeeper = new GenericContainer<>("zookeeper:3.8.0")
-//                .withExposedPorts(2181)
-//        ) {
-//            zookeeper.start();
-//
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//        }
-//    }
+
 }

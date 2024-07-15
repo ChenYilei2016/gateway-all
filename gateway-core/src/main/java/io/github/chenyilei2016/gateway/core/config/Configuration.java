@@ -39,16 +39,18 @@ public class Configuration {
 
         RegistryConfig registry = new RegistryConfig();
         registry.setAddress("zookeeper://127.0.0.1:2181");
+//        registry.setUsername("test");
+//        registry.setPassword();
         registry.setRegister(false);
 
         ReferenceConfig<GenericService> reference = new ReferenceConfig<>();
-        reference.setInterface("cn.xx.gateway.rpc.IActivityBooth");
+        reference.setInterface("io.github.chenyilei2016.providerApi.IActivityBooth");
         reference.setVersion("1.0.0");
         reference.setGeneric("true");
 
         applicationConfigMap.put("api-gateway-test", application);
         registryConfigMap.put("api-gateway-test", registry);
-        referenceConfigMap.put("cn.xx.gateway.rpc.IActivityBooth", reference);
+        referenceConfigMap.put("io.github.chenyilei2016.providerApi.IActivityBooth", reference);
     }
 
     public ApplicationConfig getApplicationConfig(String applicationName) {

@@ -1,5 +1,6 @@
 package io.github.chenyilei2016.gateway.core.session.defaults;
 
+import com.google.common.base.Stopwatch;
 import io.github.chenyilei2016.gateway.core.config.Configuration;
 import io.github.chenyilei2016.gateway.core.generic.IGenericReference;
 import io.github.chenyilei2016.gateway.core.mapping.HttpStatement;
@@ -10,6 +11,8 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.rpc.service.GenericService;
+
+import java.util.concurrent.TimeUnit;
 
 public class DefaultGatewaySession implements GatewaySession {
 
@@ -33,7 +36,7 @@ public class DefaultGatewaySession implements GatewaySession {
         HttpStatement httpStatement = configuration.getHttpStatement(uri);
         String application = httpStatement.getApplication();
         String interfaceName = httpStatement.getInterfaceName();
-
+        Stopwatch sw = Stopwatch.createStarted();
         // 获取基础服务（创建成本较高，内存存放获取）
         ApplicationConfig applicationConfig = configuration.getApplicationConfig(application);
         RegistryConfig registryConfig = configuration.getRegistryConfig(application);
@@ -44,6 +47,8 @@ public class DefaultGatewaySession implements GatewaySession {
         // 获取泛化调用服务
         ReferenceConfigCache cache = ReferenceConfigCache.getCache();
         GenericService genericService = cache.get(reference);
+        long elapsed = sw.elapsed(TimeUnit.MILLISECONDS);
+        System.err.println("generic spend time : " + elapsed);
 
         return genericService.$invoke(httpStatement.getMethodName(), new String[]{"java.lang.String"}, new Object[]{"测试传入args"});
     }

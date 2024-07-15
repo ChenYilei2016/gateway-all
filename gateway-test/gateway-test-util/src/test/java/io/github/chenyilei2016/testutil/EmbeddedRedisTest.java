@@ -2,14 +2,12 @@ package io.github.chenyilei2016.testutil;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ERedisTest {
+class EmbeddedRedisTest {
 
     @Test
     void startAndFinallyShutdown() {
 
-        ERedis.startAndFinallyShutdown(() -> {
+        EmbeddedRedis.startAndFinallyShutdown(() -> {
 
             //启动了一个redis
             try {
