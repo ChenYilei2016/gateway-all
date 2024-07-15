@@ -9,7 +9,7 @@ import io.github.chenyilei2016.gateway.core.generic.IGenericReference;
  */
 public interface GatewaySession {
 
-    Object get(String uri, Object parameter);
+    Object get(String method, Object parameter);
 
     IGenericReference getMapper(String uri);
 

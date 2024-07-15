@@ -6,6 +6,6 @@ package io.github.chenyilei2016.gateway.core.session;
  */
 public interface GatewaySessionFactory {
 
-    GatewaySession openSession();
+    GatewaySession openSession(String uri);
 
 }

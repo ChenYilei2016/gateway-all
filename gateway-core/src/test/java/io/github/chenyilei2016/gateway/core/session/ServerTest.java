@@ -50,6 +50,6 @@ public class ServerTest {
 
     /**
      * 测试调用
-     *
+     * curl http://localhost:7397/wg/activity/sayHi
      */
 }

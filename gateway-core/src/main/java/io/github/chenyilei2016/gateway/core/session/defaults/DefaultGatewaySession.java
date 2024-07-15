@@ -2,6 +2,9 @@ package io.github.chenyilei2016.gateway.core.session.defaults;
 
 import com.google.common.base.Stopwatch;
 import io.github.chenyilei2016.gateway.core.config.Configuration;
+import io.github.chenyilei2016.gateway.core.datasource.Connection;
+import io.github.chenyilei2016.gateway.core.datasource.DataSource;
+import io.github.chenyilei2016.gateway.core.datasource.unpooled.UnpooledDataSourceFactory;
 import io.github.chenyilei2016.gateway.core.generic.IGenericReference;
 import io.github.chenyilei2016.gateway.core.mapping.HttpStatement;
 import io.github.chenyilei2016.gateway.core.session.GatewaySession;
@@ -17,40 +20,21 @@ import java.util.concurrent.TimeUnit;
 public class DefaultGatewaySession implements GatewaySession {
 
     private Configuration configuration;
+    private String uri;
+    private DataSource dataSource;
 
-    public DefaultGatewaySession(Configuration configuration) {
+    public DefaultGatewaySession(Configuration configuration, String uri, DataSource dataSource) {
         this.configuration = configuration;
+        this.uri = uri;
+        this.dataSource = dataSource;
     }
 
-
     @Override
-    public Object get(String uri, Object parameter) {
+    public Object get(String method, Object parameter) {
 
-        /**
-         * get 请求的执行
-         */
+        Connection connection = dataSource.getConnection();
 
-//        configuration.getReferenceBean(uri);
-
-        // 配置信息
-        HttpStatement httpStatement = configuration.getHttpStatement(uri);
-        String application = httpStatement.getApplication();
-        String interfaceName = httpStatement.getInterfaceName();
-        Stopwatch sw = Stopwatch.createStarted();
-        // 获取基础服务（创建成本较高，内存存放获取）
-        ApplicationConfig applicationConfig = configuration.getApplicationConfig(application);
-        RegistryConfig registryConfig = configuration.getRegistryConfig(application);
-        ReferenceConfig<GenericService> reference = configuration.getReferenceConfig(interfaceName);
-        // 构建Dubbo服务
-        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
-        bootstrap.application(applicationConfig).registry(registryConfig).reference(reference).start();
-        // 获取泛化调用服务
-        ReferenceConfigCache cache = ReferenceConfigCache.getCache();
-        GenericService genericService = cache.get(reference);
-        long elapsed = sw.elapsed(TimeUnit.MILLISECONDS);
-        System.err.println("generic spend time : " + elapsed);
-
-        return genericService.$invoke(httpStatement.getMethodName(), new String[]{"java.lang.String"}, new Object[]{"测试传入args"});
+        return connection.execute(method, new String[]{"java.lang.String"}, new String[]{"name"}, new Object[]{parameter});
     }
 
     @Override

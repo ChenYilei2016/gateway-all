@@ -37,7 +37,7 @@ public class GatewayServerHandler extends BaseHandler<FullHttpRequest> {
         if (uri.equals("/favicon.ico")) return;
 
 
-        GatewaySession gatewaySession = gatewaySessionFactory.openSession();
+        GatewaySession gatewaySession = gatewaySessionFactory.openSession(uri);
         IGenericReference reference = gatewaySession.getMapper(uri);
         String result = reference.$invoke("test") + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
