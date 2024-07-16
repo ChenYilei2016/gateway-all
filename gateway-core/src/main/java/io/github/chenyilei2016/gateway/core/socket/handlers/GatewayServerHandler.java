@@ -2,10 +2,12 @@ package io.github.chenyilei2016.gateway.core.socket.handlers;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import io.github.chenyilei2016.gateway.core.ex.CancelConnectException;
 import io.github.chenyilei2016.gateway.core.generic.IGenericReference;
 import io.github.chenyilei2016.gateway.core.session.GatewaySession;
 import io.github.chenyilei2016.gateway.core.session.GatewaySessionFactory;
 import io.github.chenyilei2016.gateway.core.socket.BaseHandler;
+import io.github.chenyilei2016.gateway.core.socket.agreement.RequestParser;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 /**
  * @description 会话服务处理器
@@ -37,9 +40,10 @@ public class GatewayServerHandler extends BaseHandler<FullHttpRequest> {
         if (uri.equals("/favicon.ico")) return;
 
 
+        Map<String, Object> r = new RequestParser(request).parse();
         GatewaySession gatewaySession = gatewaySessionFactory.openSession(uri);
         IGenericReference reference = gatewaySession.getMapper(uri);
-        String result = reference.$invoke("test") + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String result = reference.$invoke(r);
 
         // 返回信息处理
         DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
@@ -64,4 +68,16 @@ public class GatewayServerHandler extends BaseHandler<FullHttpRequest> {
         channel.writeAndFlush(response);
     }
 
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        super.exceptionCaught(ctx, cause);
+        if (cause instanceof CancelConnectException) {
+            ctx.close();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import io.github.chenyilei2016.gateway.core.mapping.HttpCommandType;
 import io.github.chenyilei2016.gateway.core.session.GatewaySession;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * @description 绑定调用方法
@@ -20,13 +21,14 @@ public class MapperMethod {
         this.command = configuration.getHttpStatement(uri).getHttpCommandType();
     }
 
-    public Object execute(GatewaySession session, Object args) {
+    public Object execute(GatewaySession session, Map<String, Object> args) {
         Object result = null;
         switch (command) {
             case GET:
                 result = session.get(methodName, args);
                 break;
             case POST:
+                result = session.post(methodName, args);
                 break;
             case PUT:
                 break;

@@ -15,6 +15,10 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Callable;
 
+/**
+ * {@link io.github.chenyilei2016.gateway.core.session.ServerTest}
+ * {@link io.github.chenyilei2016.testMain.ApiGatewayTestApplication}
+ */
 public class GatewayBootstrapServer implements Callable<Channel> {
 
     private final Logger logger = LoggerFactory.getLogger(GatewayBootstrapServer.class);

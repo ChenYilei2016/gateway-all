@@ -45,6 +45,7 @@ public class Configuration {
 
         ReferenceConfig<GenericService> reference = new ReferenceConfig<>();
         reference.setInterface("io.github.chenyilei2016.providerApi.IActivityBooth");
+
         reference.setVersion("1.0.0");
         reference.setGeneric("true");
 

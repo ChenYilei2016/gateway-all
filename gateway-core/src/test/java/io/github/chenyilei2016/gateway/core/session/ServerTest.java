@@ -26,9 +26,19 @@ public class ServerTest {
                 "api-gateway-test", //应用
                 "io.github.chenyilei2016.providerApi.IActivityBooth", //接口
                 "sayHi", //方法
+                "java.lang.String", //入参
                 "/wg/activity/sayHi",
                 HttpCommandType.GET);
         configuration.addMapper(httpStatement);
+
+        HttpStatement httpStatement02 = new HttpStatement(
+                "api-gateway-test",
+                "io.github.chenyilei2016.providerApi.IActivityBooth", //接口
+                "insert",
+                "io.github.chenyilei2016.providerApi.dto.XReq",
+                "/wg/activity/insert",
+                HttpCommandType.POST);
+        configuration.addMapper(httpStatement02);
 
         // 2. 基于配置构建会话工厂
         DefaultGatewaySessionFactory gatewaySessionFactory = new DefaultGatewaySessionFactory(configuration);
@@ -51,5 +61,7 @@ public class ServerTest {
     /**
      * 测试调用
      * curl http://localhost:7397/wg/activity/sayHi
+     *
+     * curl -XPOST http://localhost:7397/wg/activity/insert   -H "Content-Type:application/json" -d '{"name":"bbbb"}'
      */
 }
