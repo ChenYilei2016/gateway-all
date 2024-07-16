@@ -5,6 +5,7 @@ import io.github.chenyilei2016.gateway.core.config.Configuration;
 import io.github.chenyilei2016.gateway.core.datasource.Connection;
 import io.github.chenyilei2016.gateway.core.datasource.DataSource;
 import io.github.chenyilei2016.gateway.core.datasource.unpooled.UnpooledDataSourceFactory;
+import io.github.chenyilei2016.gateway.core.executor.Executor;
 import io.github.chenyilei2016.gateway.core.generic.IGenericReference;
 import io.github.chenyilei2016.gateway.core.mapping.HttpStatement;
 import io.github.chenyilei2016.gateway.core.session.GatewaySession;
@@ -25,12 +26,12 @@ public class DefaultGatewaySession implements GatewaySession {
 
     private Configuration configuration;
     private String uri;
-    private DataSource dataSource;
+    private Executor executor;
 
-    public DefaultGatewaySession(Configuration configuration, String uri, DataSource dataSource) {
+    public DefaultGatewaySession(Configuration configuration, String uri, Executor executor) {
         this.configuration = configuration;
         this.uri = uri;
-        this.dataSource = dataSource;
+        this.executor = executor;
     }
 
     /**
@@ -38,27 +39,12 @@ public class DefaultGatewaySession implements GatewaySession {
      */
     @Override
     public Object get(String methodName, Map<String, Object> params) {
-        Connection connection = dataSource.getConnection();
         HttpStatement httpStatement = configuration.getHttpStatement(uri);
-        String parameterType = httpStatement.getParameterType();
-
-        /*
-         * FIXME: 暂时不支持 多参数
-         * 01(允许)：java.lang.String
-         * 02(允许)：io.github.chenyilei2016.XReq
-         *
-         */
-        Object[] parameters = SimpleTypeRegistry.isSimpleType(parameterType) ? params.values().toArray() : new Object[]{params};
-
-        if (parameters.length == 0) {
-            parameters = new Object[1];
+        try {
+            return executor.exec(httpStatement, params);
+        } catch (Exception e) {
+            throw new RuntimeException("Error exec get. Cause: " + e);
         }
-
-        return connection.execute(methodName,
-                new String[]{parameterType},
-                IGNORE_NAMES,
-                parameters
-        );
     }
 
     @Override

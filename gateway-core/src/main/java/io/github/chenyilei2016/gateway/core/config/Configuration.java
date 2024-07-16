@@ -1,5 +1,8 @@
 package io.github.chenyilei2016.gateway.core.config;
 
+import io.github.chenyilei2016.gateway.core.datasource.Connection;
+import io.github.chenyilei2016.gateway.core.executor.Executor;
+import io.github.chenyilei2016.gateway.core.executor.SimpleExecutor;
 import io.github.chenyilei2016.gateway.core.generic.IGenericReference;
 import io.github.chenyilei2016.gateway.core.generic.MapperRegistry;
 import io.github.chenyilei2016.gateway.core.mapping.HttpStatement;
@@ -82,4 +85,7 @@ public class Configuration {
         return httpStatements.get(uri);
     }
 
+    public Executor newExecutor(Connection connection) {
+        return new SimpleExecutor(this, connection);
+    }
 }

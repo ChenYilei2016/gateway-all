@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 /**
+ * 内嵌 zookeeper 简化使用
  * @author chenyilei
  * @since 2024/07/15 11:19
  */

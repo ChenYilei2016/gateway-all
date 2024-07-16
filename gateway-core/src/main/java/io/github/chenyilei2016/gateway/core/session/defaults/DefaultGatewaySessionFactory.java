@@ -4,6 +4,7 @@ package io.github.chenyilei2016.gateway.core.session.defaults;
 import io.github.chenyilei2016.gateway.core.config.Configuration;
 import io.github.chenyilei2016.gateway.core.datasource.DataSource;
 import io.github.chenyilei2016.gateway.core.datasource.unpooled.UnpooledDataSourceFactory;
+import io.github.chenyilei2016.gateway.core.executor.Executor;
 import io.github.chenyilei2016.gateway.core.session.GatewaySession;
 import io.github.chenyilei2016.gateway.core.session.GatewaySessionFactory;
 
@@ -23,8 +24,9 @@ public class DefaultGatewaySessionFactory implements GatewaySessionFactory {
         UnpooledDataSourceFactory unpooledDataSourceFactory = new UnpooledDataSourceFactory();
         unpooledDataSourceFactory.setProperties(configuration, uri);
         DataSource dataSource = unpooledDataSourceFactory.getDataSource();
-
-        return new DefaultGatewaySession(configuration, uri, dataSource);
+        // 创建执行器
+        Executor executor = configuration.newExecutor(dataSource.getConnection());
+        return new DefaultGatewaySession(configuration, uri, executor);
     }
 
 }

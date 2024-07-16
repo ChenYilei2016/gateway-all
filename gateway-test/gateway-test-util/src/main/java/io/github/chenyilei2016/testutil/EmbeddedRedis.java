@@ -12,7 +12,7 @@ public class EmbeddedRedis {
     public static void startAndFinallyShutdown(Runnable runnable) {
         try {
             RedisServer redisServer = RedisServer.newRedisServer()
-//                    .setting("maxheap 200m")
+//                    .setting("maxheap 200m") // 为啥只在windows下有用..
                     .setting("bind localhost")
                     .setting("timeout 0")
                     .port(6379)
