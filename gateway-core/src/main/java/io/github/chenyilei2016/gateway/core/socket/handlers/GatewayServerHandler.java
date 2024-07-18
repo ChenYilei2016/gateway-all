@@ -48,6 +48,10 @@ public class GatewayServerHandler extends BaseHandler<FullHttpRequest> {
         // 3. 封装返回结果
         DefaultFullHttpResponse response = new ResponseParser().parse(result);
         channel.writeAndFlush(response);
+
+        //增加一次计数, 不释放
+//        request.retain();
+//        ctx.fireChannelRead(request);
     }
 
     @Override

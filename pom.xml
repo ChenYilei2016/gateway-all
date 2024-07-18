@@ -16,6 +16,7 @@
     <modules>
         <module>gateway-core</module>
         <module>gateway-test</module>
+        <module>gateway-center</module>
     </modules>
     <packaging>pom</packaging>
 
