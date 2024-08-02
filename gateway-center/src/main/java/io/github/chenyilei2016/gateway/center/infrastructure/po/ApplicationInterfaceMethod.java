@@ -3,20 +3,22 @@ package io.github.chenyilei2016.gateway.center.infrastructure.po;
 import java.util.Date;
 
 /**
- * 
- * @description
- * 
- * 
+ *
+ * @description 应用接口方法
+ *
+ *
  */
-public class HttpStatement {
+public class ApplicationInterfaceMethod {
 
     /** 自增ID */
     private Integer id;
-    /** 应用名称； */
-    private String application;
-    /** 服务接口；RPC、其他 */
-    private String interfaceName;
-    /** 服务方法；RPC#method */
+    /** 系统标识 */
+    private String systemId;
+    /** 接口标识 */
+    private String interfaceId;
+    /** 方法标识 */
+    private String methodId;
+    /** 方法名称 */
     private String methodName;
     /** 参数类型(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"io.github.chenyilei2016.gateway.rpc.dto.XReq"} */
     private String parameterType;
@@ -39,20 +41,28 @@ public class HttpStatement {
         this.id = id;
     }
 
-    public String getApplication() {
-        return application;
+    public String getSystemId() {
+        return systemId;
     }
 
-    public void setApplication(String application) {
-        this.application = application;
+    public void setSystemId(String systemId) {
+        this.systemId = systemId;
     }
 
-    public String getInterfaceName() {
-        return interfaceName;
+    public String getInterfaceId() {
+        return interfaceId;
     }
 
-    public void setInterfaceName(String interfaceName) {
-        this.interfaceName = interfaceName;
+    public void setInterfaceId(String interfaceId) {
+        this.interfaceId = interfaceId;
+    }
+
+    public String getMethodId() {
+        return methodId;
+    }
+
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 
     public String getMethodName() {

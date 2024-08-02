@@ -7,7 +7,7 @@ CREATE TABLE http_statement (
                                 application TEXT NOT NULL COMMENT '应用名称',
                                 interface_name TEXT NOT NULL COMMENT '服务接口；RPC、其他',
                                 method_name TEXT NOT NULL COMMENT '服务方法；RPC#method',
-                                parameter_type TEXT NOT NULL COMMENT '参数类型(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"cn.bugstack.gateway.rpc.dto.XReq"}',
+                                parameter_type TEXT NOT NULL COMMENT '参数类型(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"io.github.chenyilei2016.gateway.rpc.dto.XReq"}',
                                 uri TEXT NOT NULL COMMENT '网关接口',
                                 http_command_type TEXT NOT NULL COMMENT '接口类型；GET、POST、PUT、DELETE',
                                 auth INTEGER NOT NULL DEFAULT 0 COMMENT 'true = 1是、false = 0否',
@@ -66,7 +66,7 @@ CREATE TABLE application_interface_method (
   interface_id VARCHAR(64) DEFAULT NULL, -- 接口标识
   method_id VARCHAR(64) DEFAULT NULL, -- 方法标识
   method_name VARCHAR(128) DEFAULT NULL, -- 方法名称
-  parameter_type VARCHAR(256) DEFAULT NULL, -- 参数类型；(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"cn.bugstack.gateway.rpc.dto.XReq"}
+  parameter_type VARCHAR(256) DEFAULT NULL, -- 参数类型；(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"io.github.chenyilei2016.gateway.rpc.dto.XReq"}
   uri VARCHAR(126) DEFAULT NULL, -- 网关接口
   http_command_type VARCHAR(32) DEFAULT NULL, -- 接口类型；GET、POST、PUT、DELETE
   auth INTEGER DEFAULT NULL, -- true = 1是、false = 0否
