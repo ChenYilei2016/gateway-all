@@ -1,17 +1,13 @@
-package io.github.chenyilei2016.gateway.center.infrastructure.po;
-
-import java.util.Date;
+package io.github.chenyilei2016.gateway.center.domain.register.model.vo;
 
 /**
+ *
+ * @description 应用服务 VO
  * 
- * @description 应用系统
- * 
- * 
+ *
  */
-public class ApplicationSystem {
+public class ApplicationSystemVO {
 
-    /** 自增ID */
-    private Integer id;
     /** 系统标识 */
     private String systemId;
     /** 系统名称 */
@@ -20,18 +16,6 @@ public class ApplicationSystem {
     private String systemType;
     /** 注册中心；zookeeper://127.0.0.1:2181*/
     private String systemRegistry;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getSystemId() {
         return systemId;
@@ -63,22 +47,6 @@ public class ApplicationSystem {
 
     public void setSystemRegistry(String systemRegistry) {
         this.systemRegistry = systemRegistry;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
 }

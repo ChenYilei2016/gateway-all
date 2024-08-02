@@ -1,17 +1,13 @@
-package io.github.chenyilei2016.gateway.center.infrastructure.po;
-
-import java.util.Date;
+package io.github.chenyilei2016.gateway.center.domain.register.model.vo;
 
 /**
  *
- * @description 应用接口方法
+ * @description 接口方法 VO
  *
  *
  */
-public class ApplicationInterfaceMethod {
+public class ApplicationInterfaceMethodVO {
 
-    /** 自增ID */
-    private Integer id;
     /** 系统标识 */
     private String systemId;
     /** 接口标识 */
@@ -28,18 +24,6 @@ public class ApplicationInterfaceMethod {
     private String httpCommandType;
     /** 是否鉴权；true = 1是、false = 0否 */
     private Integer auth;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getSystemId() {
         return systemId;
@@ -103,22 +87,6 @@ public class ApplicationInterfaceMethod {
 
     public void setAuth(Integer auth) {
         this.auth = auth;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
 }

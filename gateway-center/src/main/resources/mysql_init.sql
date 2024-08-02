@@ -1,3 +1,19 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : 127.0.0.1
+ Source Server Type    : MySQL
+ Source Server Version : 50639
+ Source Host           : localhost:3306
+ Source Schema         : api-gateway
+
+ Target Server Type    : MySQL
+ Target Server Version : 50639
+ File Encoding         : 65001
+
+ Date: 13/11/2022 13:18:09
+*/
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -13,13 +29,15 @@ CREATE TABLE `application_interface` (
   `interface_version` varchar(16) COLLATE utf8_bin DEFAULT NULL COMMENT '接口版本',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx` (`system_id`,`interface_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of application_interface
 -- ----------------------------
 BEGIN;
+INSERT INTO `application_interface` VALUES (1, 'api-gateway-test', 'io.github.chenyilei2016.providerApi.IActivityBooth', 'sayHi', 'v1.0.0', '2022-11-13 13:13:00', '2022-11-13 13:13:00');
 COMMIT;
 
 -- ----------------------------
@@ -32,19 +50,22 @@ CREATE TABLE `application_interface_method` (
   `interface_id` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '接口标识',
   `method_id` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '方法标识',
   `method_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '方法名称',
-  `parameter_type` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '参数类型；(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"io.github.chenyilei2016.gateway.rpc.dto.XReq"}',
+  `parameter_type` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '参数类型；(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"io.github.gateway.rpc.dto.XReq"}',
   `uri` varchar(126) COLLATE utf8_bin DEFAULT NULL COMMENT '网关接口',
   `http_command_type` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '接口类型；GET、POST、PUT、DELETE',
   `auth` int(4) DEFAULT NULL COMMENT 'true = 1是、false = 0否',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx` (`system_id`,`interface_id`,`method_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of application_interface_method
 -- ----------------------------
 BEGIN;
+INSERT INTO `application_interface_method` VALUES (1, 'api-gateway-test', 'io.github.chenyilei2016.providerApi.IActivityBooth', 'sayHi', '测试方法', 'java.lang.String', '/wg/activity/sayHi', 'GET', 0, '2022-11-13 13:16:52', '2022-11-13 13:16:52');
+INSERT INTO `application_interface_method` VALUES (2, 'api-gateway-test', 'io.github.chenyilei2016.providerApi.IActivityBooth', 'insert', '插入方法', 'io.github.chenyilei2016.providerApi.dto.XReq', '/wg/activity/insert', 'POST', 1, '2022-11-13 13:16:52', '2022-11-13 13:16:52');
 COMMIT;
 
 -- ----------------------------
@@ -59,13 +80,16 @@ CREATE TABLE `application_system` (
   `system_registry` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '注册中心',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_systemId` (`system_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of application_system
 -- ----------------------------
 BEGIN;
+INSERT INTO `application_system` VALUES (1, 'lottery-api', '抽奖API系统', 'RPC', '127.0.0.1', '2022-11-13 13:10:03', '2022-11-13 13:10:03');
+INSERT INTO `application_system` VALUES (3, 'api-gateway-test', '网关测试系统', 'RPC', '127.0.0.1', '2022-11-13 13:12:54', '2022-11-13 13:12:54');
 COMMIT;
 
 -- ----------------------------
@@ -98,12 +122,13 @@ CREATE TABLE `gateway_server` (
   `group_id` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '分组标识',
   `group_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '分组名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of gateway_server
 -- ----------------------------
 BEGIN;
+INSERT INTO `gateway_server` VALUES (1, '10001', '缺省的');
 COMMIT;
 
 -- ----------------------------
@@ -112,6 +137,7 @@ COMMIT;
 DROP TABLE IF EXISTS `gateway_server_detail`;
 CREATE TABLE `gateway_server_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `group_id` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '分组标识',
   `gateway_id` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '网关标识',
   `gateway_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '网关名称',
   `gateway_address` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '网关地址：127.0.0.1',
@@ -119,13 +145,16 @@ CREATE TABLE `gateway_server_detail` (
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_gateway_id` (`gateway_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  UNIQUE KEY `idx_gateway` (`gateway_id`,`gateway_address`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of gateway_server_detail
 -- ----------------------------
 BEGIN;
+INSERT INTO `gateway_server_detail` VALUES (13, '10001', 'api-gateway-g1', '电商支付网关', '127.0.0.196', '1', '2022-11-06 15:22:11', '2022-11-06 15:22:11');
+INSERT INTO `gateway_server_detail` VALUES (14, '10001', 'api-gateway-g2', '电商支付网关', '127.0.0.197', '1', '2022-11-06 15:22:11', '2022-11-06 15:22:11');
+INSERT INTO `gateway_server_detail` VALUES (15, '10001', 'api-gateway-g3', '电商配送网关', '127.0.0.198', '1', '2022-11-06 15:23:19', '2022-11-06 15:23:19');
 COMMIT;
 
 -- ----------------------------
@@ -137,7 +166,7 @@ CREATE TABLE `http_statement` (
   `application` varchar(128) COLLATE utf8_bin NOT NULL COMMENT '应用名称',
   `interface_name` varchar(256) COLLATE utf8_bin NOT NULL COMMENT '服务接口；RPC、其他',
   `method_name` varchar(128) COLLATE utf8_bin NOT NULL COMMENT ' 服务方法；RPC#method',
-  `parameter_type` varchar(256) COLLATE utf8_bin NOT NULL COMMENT '参数类型(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"io.github.chenyilei2016.gateway.rpc.dto.XReq"}',
+  `parameter_type` varchar(256) COLLATE utf8_bin NOT NULL COMMENT '参数类型(RPC 限定单参数注册)；new String[]{"java.lang.String"}、new String[]{"io.github.gateway.rpc.dto.XReq"}',
   `uri` varchar(128) COLLATE utf8_bin NOT NULL COMMENT '网关接口',
   `http_command_type` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '接口类型；GET、POST、PUT、DELETE',
   `auth` int(4) NOT NULL DEFAULT '0' COMMENT 'true = 1是、false = 0否',
@@ -145,3 +174,13 @@ CREATE TABLE `http_statement` (
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of http_statement
+-- ----------------------------
+BEGIN;
+INSERT INTO `http_statement` VALUES (1, 'api-gateway-test', 'io.github.chenyilei2016.providerApi.IActivityBooth', 'sayHi', 'java.lang.String', '/wg/activity/sayHi', 'GET', 0, '2022-10-22 15:30:00', '2022-10-22 15:30:00');
+INSERT INTO `http_statement` VALUES (2, 'api-gateway-test', 'io.github.chenyilei2016.providerApi.IActivityBooth', 'insert', 'io.github.chenyilei2016.providerApi.dto.XReq', '/wg/activity/insert', 'POST', 1, '2022-10-22 15:30:00', '2022-10-22 15:30:00');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

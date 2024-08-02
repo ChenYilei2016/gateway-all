@@ -3,7 +3,7 @@ package io.github.chenyilei2016.gateway.center.infrastructure.po;
 /**
  *
  * @description 网关服务
- * 
+ *
  *
  */
 public class GatewayServer {

@@ -4,10 +4,10 @@ import io.github.chenyilei2016.gateway.center.infrastructure.po.GatewayServerDet
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- *
+ * 
  * @description
- *
- *
+ * 
+ * 
  */
 @Mapper
 public interface IGatewayServerDetailDao {

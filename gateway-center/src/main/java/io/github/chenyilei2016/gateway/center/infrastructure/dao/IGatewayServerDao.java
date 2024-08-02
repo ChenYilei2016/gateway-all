@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * 
+ *
  * @description
  *
- * 
+ *
  */
 @Mapper
 public interface IGatewayServerDao {

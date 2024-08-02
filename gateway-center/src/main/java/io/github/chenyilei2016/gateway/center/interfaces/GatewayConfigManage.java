@@ -49,7 +49,7 @@ public class GatewayConfigManage {
      * @param gatewayAddress 网关地址
      * @return 注册状态
      */
-    @PostMapping(value = "registerGateway")
+    @PostMapping(value = "registerGateway", produces = "application/json;charset=utf-8")
     public Result<Boolean> registerGatewayServerNode(@RequestParam String groupId, @RequestParam String gatewayId, @RequestParam String gatewayName, @RequestParam String gatewayAddress) {
         try {
             logger.info("注册网关服务节点 gatewayId：{} gatewayName：{} gatewayAddress：{}", gatewayId, gatewayName, gatewayAddress);
@@ -64,7 +64,7 @@ public class GatewayConfigManage {
     /**
      * TODO 开发完成续应用注册后，开发这部分
      */
-    @PostMapping(value = "distributionGateway")
+    @PostMapping(value = "distributionGateway", produces = "application/json;charset=utf-8")
     public void distributionGatewayServerNode(@RequestParam String groupId, @RequestParam String gatewayId) {
 
     }

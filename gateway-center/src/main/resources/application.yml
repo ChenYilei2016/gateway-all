@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:sqlite:gateway-center/src/main/resources/tb-gateway-center.sqlite
+    url: jdbc:sqlite:/Users/yileichen/Desktop/ownCode/gateway-all/gateway-center/src/main/resources/tb-gateway-center.sqlite
     driver-class-name: org.sqlite.JDBC
 
 mybatis:

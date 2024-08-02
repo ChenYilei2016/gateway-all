@@ -16,7 +16,7 @@ import java.util.List;
 /**
  *
  * @description 网关配置仓储服务
- *
+ * 
  * 
  */
 @Component
